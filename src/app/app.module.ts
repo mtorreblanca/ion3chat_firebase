@@ -9,7 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { ChatPage } from '../pages/chat/chat';
 
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 var firebase = {
   apiKey: "AIzaSyC-si0D4MrPgfGqJtVPeRuyzXdChQJJkYI",
@@ -30,7 +30,7 @@ var firebase = {
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebase),
-    AngularFireDatabase
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
