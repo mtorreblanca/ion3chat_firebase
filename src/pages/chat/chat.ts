@@ -17,7 +17,7 @@ export class ChatPage {
 
   username: string = '';
   message: string = '';
-  s;
+  _chatSubscription;
   messages: object[] = [];
   
   constructor(
@@ -26,13 +26,9 @@ export class ChatPage {
     public db: AngularFireDatabase,
     ) {
     this.username = this.navParams.get('username');
-    this.s = this.db.list('/chat').valueChanges().subscribe( data => {
+    this._chatSubscription = this.db.list('/chat').valueChanges().subscribe( data => {
       this.messages = data;
     });
-  }
-
-  ionViewDidLoad() {
-  
   }
 
   sendMessage(){
@@ -42,4 +38,20 @@ export class ChatPage {
     })
   }
 
+  ionViewWillLeave(){
+    console.log('user is about to go');
+    this._chatSubscription.unsubscribe();
+    this.db.list('/chat').push({
+      specialMessage: true,
+      message: `${this.username} has joined the room` 
+    });
+  }
+  
+  ionViewDidLoad(){
+    console.log('ionViewDid Load ChatPage');
+    this.db.list('/chat').push({
+      specialMessage: true,
+      message: `${this.username} has joined the room` 
+    });
+  }
 }
